@@ -1,0 +1,32 @@
+package ExemploCup.lexicoExe3;
+import java_cup.runtime.*;
+
+/* Terminais */
+terminal PTVIRG, MAIS, MENOS, MULT, DIV;
+terminal Integer INTEIRO;
+
+/* Não Terminais */
+non terminal expr_ptv;
+non terminal Integer expr;
+
+/* Precedência de Operadores */
+precedence left MAIS, MENOS;
+precedence left MULT, DIV;
+
+start with expr_ptv;
+
+/* Regras Gramaticais e Ações Semânticas */
+
+expr_ptv ::= expr:e PTVIRG
+             {: System.out.println("Resultado da expressao: " + e); :};
+
+expr ::= INTEIRO:n
+         {: RESULT = n; :}
+       | expr:e1 MAIS expr:e2
+         {: RESULT = e1 + e2; :}
+       | expr:e1 MENOS expr:e2
+         {: RESULT = e1 - e2; :}
+       | expr:e1 MULT expr:e2
+         {: RESULT = e1 * e2; :}
+       | expr:e1 DIV expr:e2
+         {: RESULT = e1 / e2; :};

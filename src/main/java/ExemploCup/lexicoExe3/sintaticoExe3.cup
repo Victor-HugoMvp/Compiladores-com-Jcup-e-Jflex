@@ -1,0 +1,33 @@
+package ExemploCup.lexicoExe3;
+
+import java_cup.runtime.*;
+
+parser code {:
+    @Override
+    public Class getSymbolContainer() {
+        return Sym.class;
+    }
+:};
+
+/* Terminais (tokens vindos do Lexer) */
+terminal MAIS, MENOS, MULT, DIV, PTVIRG;
+terminal Integer INTEIRO;
+
+/* Não terminais */
+non terminal expr_list, expr;
+
+/* Precedência de Operadores */
+precedence left MAIS, MENOS;
+precedence left MULT, DIV;
+
+/* Regras de Produção */
+start with expr_list;
+
+expr_list ::= expr_list expr PTVIRG
+            | expr PTVIRG;
+
+expr ::= expr MAIS expr
+       | expr MENOS expr
+       | expr MULT expr
+       | expr DIV expr
+       | INTEIRO;

@@ -1,0 +1,56 @@
+package ExemploCup.exe2;
+import java_cup.runtime.*;
+
+parser code {:
+    public void report_error(String message, Object info) {
+        System.out.println("AVISO - " + message);
+    }
+
+    public void report_fatal_error(String message, Object info) {
+        System.out.println("ERRO - " + message);
+        System.exit(-1);
+    }
+:};
+
+/* Terminais */
+terminal VOID, MAIN, TIPO_INTEIRO, TIPO_FLOAT, IF, ELSE;
+terminal PARENTESE_ESQUERDO, PARENTESE_DIREITO, CHAVE_ESQUERDA, CHAVE_DIREITA;
+terminal PTVG, ATRIB, MAIOR, MULT;
+terminal INTEIRO, VARIAVEL, FLOAT;
+
+/* Não terminais */
+non terminal program, lista_comandos, comando, decl_var, tipo_dado;
+non terminal atrib, expr, expr_rel, bloco;
+
+/* Definição de Precedência */
+precedence left MULT;
+
+start with program;
+
+/* Regras Gramaticais */
+
+program         ::= VOID MAIN PARENTESE_ESQUERDO PARENTESE_DIREITO CHAVE_ESQUERDA lista_comandos CHAVE_DIREITA;
+
+lista_comandos  ::= lista_comandos comando
+                  | comando;
+
+comando         ::= decl_var
+                  | atrib
+                  | IF PARENTESE_ESQUERDO expr_rel PARENTESE_DIREITO comando
+                  | IF PARENTESE_ESQUERDO expr_rel PARENTESE_DIREITO comando ELSE comando
+                  | bloco;
+
+bloco           ::= CHAVE_ESQUERDA lista_comandos CHAVE_DIREITA;
+
+decl_var        ::= tipo_dado VARIAVEL PTVG;
+
+tipo_dado       ::= TIPO_INTEIRO
+                  | TIPO_FLOAT;
+
+atrib           ::= VARIAVEL ATRIB expr PTVG;
+
+expr_rel        ::= expr MAIOR expr;
+
+expr            ::= expr MULT expr
+                  | VARIAVEL
+                  | INTEIRO;

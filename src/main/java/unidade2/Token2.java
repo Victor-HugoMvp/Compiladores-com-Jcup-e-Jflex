@@ -1,0 +1,16 @@
+package unidade2;
+
+
+public enum Token2 {
+    IDENTIFICADOR,
+    CONSTANTE,
+    INTEIRO,
+    DECIMAL,
+    OPERADORARITMETICO,
+    OPERADORCOMPARATIVO,
+    OPERADORLOGICO,
+    SIMBOLOESPECIAL,
+    BRANCO,
+    PALAVRACHAVE ,
+    ERROR;
+}
